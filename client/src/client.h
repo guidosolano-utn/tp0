@@ -7,6 +7,7 @@
 #include<commons/string.h>
 #include<commons/config.h>
 #include<readline/readline.h>
+#include <stdbool.h>
 
 #include "utils.h"
 
