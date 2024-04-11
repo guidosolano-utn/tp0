@@ -18,6 +18,8 @@ void* serializar_paquete(t_paquete* paquete, int bytes)
 
 int crear_conexion(char *ip, char* puerto)
 {
+	printf("Configurando Conexion...\n");
+	int err;
 	struct addrinfo hints;
 	struct addrinfo *server_info;
 
@@ -26,15 +28,33 @@ int crear_conexion(char *ip, char* puerto)
 	hints.ai_socktype = SOCK_STREAM;
 	hints.ai_flags = AI_PASSIVE;
 
-	getaddrinfo(ip, puerto, &hints, &server_info);
+	err = getaddrinfo("127.0.0.1", "4444", &hints, &server_info);
 
+	if (err == -1 ) {printf("Error\n"); exit (-1);}
+	else printf("Datos del Socket obtenidos...\n");
+
+	getaddrinfo(ip, puerto, &hints, &server_info);
+	printf("Confirgurando...\n");
 	// Ahora vamos a crear el socket.
 	int socket_cliente = 0;
 
 	// Ahora que tenemos el socket, vamos a conectarlo
+	int fd_conexion = socket(	server_info->ai_family,
+                        		server_info->ai_socktype,
+                         		server_info->ai_protocol);
+	printf("Chequeando parametros fd\n");
+	
+	// llamada a connect 
+	printf("Generando Conexion.... \nEspere...\n\n");
+	err = connect(fd_conexion, server_info->ai_addr, server_info->ai_addrlen); // llamada a connect 
+	printf("Tiempo de Conexion finalizado.\n");
+
+	if (err == -1 ) {printf("Error de connexion\n"); exit (-1);} else printf("Conexion ok\n");
 
 
-	freeaddrinfo(server_info);
+	freeaddrinfo(server_info); // librera la memoria de server_info que apunta a al socket
+
+	close (fd_conexion);
 
 	return socket_cliente;
 }

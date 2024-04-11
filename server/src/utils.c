@@ -4,10 +4,11 @@ t_log* logger;
 
 int iniciar_servidor(void)
 {
-	// Quitar esta línea cuando hayamos terminado de implementar la funcion
-	assert(!"no implementado!");
+	
+	printf("Iniciando Servidor...\n");
 
 	int socket_servidor;
+	int err;
 
 	struct addrinfo hints, *servinfo, *p;
 
@@ -18,11 +19,32 @@ int iniciar_servidor(void)
 
 	getaddrinfo(NULL, PUERTO, &hints, &servinfo);
 
+	err = getaddrinfo(NULL, "4444", &hints, &servinfo);
+
+	if (err == -1 ) {printf("Error\n"); exit (-1);}
+	else printf("Entregando Datos del Socket...\n");
+
 	// Creamos el socket de escucha del servidor
+	int fd_escucha = socket(servinfo->ai_family,
+                       		servinfo->ai_socktype,
+                        	servinfo->ai_protocol);
 
 	// Asociamos el socket a un puerto
 
+	err = bind(fd_escucha, servinfo->ai_addr, servinfo->ai_addrlen);
+	if (err == -1 ) {printf("Error\n"); exit (-1);}
+	else printf("Uniendo Socket al Puerto...\n");
+
+	err = listen(fd_escucha, SOMAXCONN);	
+	if (err == -1 ) {printf("Error\n"); exit (-1);}
+	else printf("Esperando al Cliente en el Socket...\n");
+
 	// Escuchamos las conexiones entrantes
+
+	int fd_conexion = accept(fd_escucha, NULL, NULL);
+	if (err == -1 ) {printf("Error\n"); exit (-1);}
+	else printf("Aceptando Conexion...\n");
+
 
 	freeaddrinfo(servinfo);
 	log_trace(logger, "Listo para escuchar a mi cliente");
