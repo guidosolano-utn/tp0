@@ -11,7 +11,7 @@ int main(void)
 	int  *conexion;
 
 	
-	char *path = "/home/utnso/cliente.config";
+	char *path = "cliente.config";
 	char* key = "IP";
 	char *puerto_key= "PUERTO";
 	char *valor_key= "CLAVE";
