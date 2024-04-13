@@ -8,7 +8,7 @@ int main(void)
 	char* puerto;
 	char* valor ;
 	char* file_1 = "tp0.log";
-	int  *conexion;
+	int  conexion;
 
 	
 	char *path = "cliente.config";
@@ -79,7 +79,7 @@ int main(void)
 	
 	printf("\n----------CONEXION A SERVIDOR----------------\n\n");
 	
-	*conexion = crear_conexion(ip,puerto);
+	conexion = crear_conexion(ip,puerto);
 
 	enviar_mensaje (valor,conexion);
 
@@ -124,7 +124,7 @@ void paquete(int conexion)
 
 	paquete = crear_paquete();	
 
-	agregar_a_paquete(paquete,conexion, conexion );
+	agregar_a_paquete(paquete,conexion,leido);
 
 	enviar_paquete(paquete,conexion);	
 	 
