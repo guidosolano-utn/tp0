@@ -20,6 +20,7 @@ int crear_conexion(char *ip, char* puerto)
 {
 	printf("Configurando Conexion...\n");
 	int err;
+	int fd_conexion;
 	struct addrinfo hints;
 	struct addrinfo *server_info;
 
@@ -40,7 +41,7 @@ int crear_conexion(char *ip, char* puerto)
 	
 	// Ahora vamos a crear el socket.
 	
-	int fd_conexion = socket(	server_info->ai_family,
+	fd_conexion = socket(		server_info->ai_family,
                         		server_info->ai_socktype,
                          		server_info->ai_protocol);
 	if (fd_conexion == -1) {

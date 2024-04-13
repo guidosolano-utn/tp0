@@ -5,6 +5,7 @@ t_log *logger;
 int iniciar_servidor(void)
 {
 
+	
 	printf("Iniciando Servidor...\n");
 
 	int fd_escucha;
@@ -28,7 +29,7 @@ int iniciar_servidor(void)
 		printf("Entregando Datos del Socket...\n");
 
 	// Creamos el socket de escucha del servidor
-	int fd_escucha = socket(servinfo->ai_family,
+	fd_escucha = socket(servinfo->ai_family,
 							servinfo->ai_socktype,
 							servinfo->ai_protocol);
 
@@ -67,8 +68,8 @@ int esperar_cliente(int socket_servidor)
 	// Aceptamos un nuevo cliente
 	int socket_cliente;
 
-	int socket_servidor = accept(socket_servidor, NULL, NULL);
-	if (err == -1)
+	socket_cliente = accept(socket_servidor, NULL, NULL);
+	if (socket_cliente == -1)
 	{
 		printf("Error\n");
 		exit(-1);
@@ -77,7 +78,6 @@ int esperar_cliente(int socket_servidor)
 		printf("Aceptando Conexion...\n");
 
 	log_info(logger, "Se conecto un cliente!");
-
 
 
 	return socket_cliente;
